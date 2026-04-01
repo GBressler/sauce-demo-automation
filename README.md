@@ -64,15 +64,7 @@ npx playwright install
 
 ### Environment variables
 
-Create a `.env` file in the project root. The credentials are publicly available on the [Sauce Demo](https://www.saucedemo.com/) login page:
-```env
-SAUCE_USERNAME1=standard_user
-SAUCE_PASSWORD1=secret_sauce
-SAUCE_USERNAME2=invalid_user
-SAUCE_PASSWORD2=wrong_password
-BASE_URL=https://www.saucedemo.com
-```
-
+Create a `.env` file in the project root. The credentials are publicly available on the [Sauce Demo](https://www.saucedemo.com/) login page.
 > The `.env` file is listed in `.gitignore` and will not be committed to version control.
 
 ---
