@@ -5,6 +5,7 @@ class CartPage extends BasePage {
     super(page);
     this.cartContainer = '.cart_contents_container';
     this.cartItem = '.cart_item';
+    this.cartItemName = '.inventory_item_name'; 
     this.checkoutButton = '#checkout';
   }
 
@@ -13,10 +14,9 @@ class CartPage extends BasePage {
   }
 
   async getCartItems() {
-    const items = await this.page.$$eval(this.cartItem, items =>
-      items.map(item => item.querySelector('.inventory_item_name').textContent.trim())
-    );
-    return items;
+  const itemElements = await this.page.locator(`${this.cartItem} ${this.cartItemName}`).all();
+  return Promise.all(itemElements.map(item => item.textContent()));
+
   }
 
   async proceedToCheckout() {

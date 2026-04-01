@@ -6,7 +6,12 @@
   "scripts": {
     "test": "cucumber-js",
     "test:playwright": "playwright test",
-    "test:headed": "playwright test --headed"
+    "test:headed": "playwright test --headed",
+    "test:checkout": "npx cucumber-js features/checkout.feature",
+    "test:products": "npx cucumber-js features/products.feature",
+    "test:cart": "npx cucumber-js features/cart.feature",
+    "test:login": "npx cucumber-js features/login.feature",
+    "test:all": "npx cucumber-js features/*.feature"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +21,8 @@
     "@cucumber/cucumber": "^12.7.0",
     "@playwright/test": "^1.58.2",
     "playwright-bdd": "^8.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
   }
 }

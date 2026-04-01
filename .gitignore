@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Playwright specific
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright-reports/
+index.html
+
+
+# Environment and Secrets
+.env
+.env.local
+*.log
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/

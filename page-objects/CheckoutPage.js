@@ -20,10 +20,13 @@ class CheckoutPage extends BasePage {
     await this.page.fill(this.firstNameInput, firstName);
     await this.page.fill(this.lastNameInput, lastName);
     await this.page.fill(this.postalCodeInput, postalCode);
-    await this.page.click(this.continueButton);
   }
 
-  async completePurchase() {
+  async clickContinue() {
+  await this.page.click(this.continueButton);
+  }
+
+  async clickFinish() {
     await this.page.click(this.finishButton);
   }
 

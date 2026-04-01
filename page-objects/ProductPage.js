@@ -1,21 +1,21 @@
 const BasePage = require('./BasePage');
 
-class InventoryPage extends BasePage {
+class ProductPage extends BasePage {
   constructor(page) {
     super(page);
-    this.inventoryContainer = '.inventory_container';
+    this.ProductsContainer = '.inventory_container';
     this.addToCartButton = '.btn_inventory';
     this.cartBadge = '.shopping_cart_badge';
     this.cartIcon = '.shopping_cart_link';
   }
 
   async isLoaded() {
-    return await this.page.isVisible(this.inventoryContainer);
+    return await this.page.isVisible(this.ProductsContainer);
   }
 
   async addItemToCart(itemName) {
-    const itemSelector = `.inventory_item:has-text("${itemName}") ${this.addToCartButton}`;
-    await this.page.click(itemSelector);
+    const id = itemName.toLowerCase().split(' ').join('-');
+    await this.page.click(`[data-test="add-to-cart-${id}"]`);
   }
 
   async getCartBadgeCount() {
@@ -28,4 +28,4 @@ class InventoryPage extends BasePage {
   }
 }
 
-module.exports = InventoryPage;
+module.exports = ProductPage;
