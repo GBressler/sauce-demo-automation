@@ -1,37 +1,38 @@
-# Sauce Demo Automation – QA Challenge
+# Demo de Automatización Sauce – Desafío QA
 
-Automated test suite for [Sauce Demo](https://www.saucedemo.com/) built with **Playwright + Cucumber (BDD)** and the **Page Object Model** design pattern.
-
----
-
-## User Story
-
-> As a Sauce Demo customer,  
-> I want to be able to log in, add products to the cart, and complete a purchase,  
-> so that I can acquire the products I need.
+Suite de pruebas automatizadas para [Sauce Demo](https://www.saucedemo.com/) construida con **Playwright + Cucumber (BDD)** y el patrón de diseño **Page Object Model**.
 
 ---
 
-## Tech Stack
+## Historia de Usuario
 
-| Tool | Purpose |
-|---|---|
-| [Playwright](https://playwright.dev/) | Browser automation |
-| [Cucumber.js](https://cucumber.io/) | BDD test runner |
-| [Gherkin](https://cucumber.io/docs/gherkin/) | Feature file syntax |
-| Page Object Model | Design pattern |
+> Como cliente de Sauce Demo,
+> quiero poder iniciar sesión, agregar productos al carrito y completar una compra,
+> para poder adquirir los productos que necesito.
 
 ---
 
-## Project Structure
+## Stack Tecnológico
+
+| Herramienta                                  | Propósito                    |
+| -------------------------------------------- | ---------------------------- |
+| [Playwright](https://playwright.dev/)        | Automatización de navegador  |
+| [Cucumber.js](https://cucumber.io/)          | Ejecutor de pruebas BDD      |
+| [Gherkin](https://cucumber.io/docs/gherkin/) | Sintaxis de archivos feature |
+| Page Object Model                            | Patrón de diseño             |
+
+---
+
+## Estructura del Proyecto
+
 ```
-├── features/               # Gherkin feature files
+├── features/               # Archivos feature en Gherkin
 │   ├── login.feature
 │   ├── products.feature
 │   ├── cart.feature
 │   └── checkout.feature
-├── step-definitions/       # Cucumber step implementations
-├── page-objects/           # POM classes (one per page)
+├── step-definitions/       # Implementaciones de pasos en Cucumber
+├── page-objects/           # Clases POM (una por página)
 │   ├── BasePage.js
 │   ├── LoginPage.js
 │   ├── ProductsPage.js
@@ -39,111 +40,119 @@ Automated test suite for [Sauce Demo](https://www.saucedemo.com/) built with **P
 │   └── CheckoutPage.js
 ├── playwright.config.js
 ├── cucumber.js
-└── .env                    # Credentials (not committed — see setup below)
+└── .env                    # Credenciales (no versionadas — ver configuración abajo)
 ```
 
 ---
 
-## Setup
+## Configuración
 
-### Prerequisites
+### Prerrequisitos
 
-- Node.js **20.x, 22.x, or 24.x** (Playwright requirement)
-- npm
+* Node.js **20.x, 22.x o 24.x** (requisito de Playwright)
+* npm
 
-### Install dependencies
+### Instalar dependencias
+
 ```bash
 npm install
 npx playwright install
 ```
 
-> **Linux only:** if you hit a missing library error, run:
+> **Solo Linux:** si aparece un error por librería faltante, ejecuta:
+>
 > ```bash
 > sudo apt-get install libavif13
 > ```
 
-### Environment variables
+### Variables de entorno
 
-Create a `.env` file in the project root. The credentials are publicly available on the [Sauce Demo](https://www.saucedemo.com/) login page:
-```env
-SAUCE_USERNAME1=standard_user
-SAUCE_PASSWORD1=secret_sauce
-SAUCE_USERNAME2=invalid_user
-SAUCE_PASSWORD2=wrong_password
-BASE_URL=https://www.saucedemo.com
-```
+Crea un archivo `.env` en la raíz del proyecto. Las credenciales están disponibles públicamente en la página de login de [Sauce Demo](https://www.saucedemo.com/).
 
-> The `.env` file is listed in `.gitignore` and will not be committed to version control.
+````
+
+> El archivo `.env` está incluido en `.gitignore` y no se subirá al control de versiones.
 
 ---
 
-## Running Tests
+## Ejecución de Pruebas
 
-### Full suite
+### Suite completa
 ```bash
-npm test                  # All Cucumber scenarios
-npm run test:all          # Explicit glob — same result
+npm test                  # Todos los escenarios de Cucumber
+npm run test:all          # Glob explícito — mismo resultado
+````
+
+### Por feature
+
+```bash
+npm run test:login        # Escenarios de login
+npm run test:products     # Agregar producto al carrito
+npm run test:cart         # Ver contenido del carrito
+npm run test:checkout     # Flujo completo de compra
 ```
 
-### By feature
-```bash
-npm run test:login        # Login scenarios
-npm run test:products     # Add product to cart
-npm run test:cart         # View cart contents
-npm run test:checkout     # Complete purchase flow
-```
+### Runner de Playwright
 
-### Playwright runner
 ```bash
 npm run test:playwright   # Headless
-npm run test:headed       # With browser UI visible
+npm run test:headed       # Con UI del navegador visible
 ```
 
 ---
 
-## Test Scenarios
+## Escenarios de Prueba
 
 ### Login (`login.feature`)
-- ✅ Successful login with valid credentials (`standard_user`)
-- ✅ Failed login with invalid credentials (`invalid_user` / wrong password)
-- ✅ Failed login with `locked_out_user` — verifies error message
 
-### Products (`products.feature`)
-- ✅ Add a product to the cart from the products page
-- ✅ Cart badge updates correctly
+* ✅ Inicio de sesión exitoso con credenciales válidas (`standard_user`)
+* ✅ Fallo de login con credenciales inválidas (`invalid_user` / contraseña incorrecta)
+* ✅ Fallo de login con `locked_out_user` — valida el mensaje de error
 
-### Cart (`cart.feature`)
-- ✅ Added products appear in the shopping cart
-- ✅ Product name, price, and quantity are correct
+### Productos (`products.feature`)
+
+* ✅ Agregar un producto al carrito desde la página de productos
+* ✅ El badge del carrito se actualiza correctamente
+
+### Carrito (`cart.feature`)
+
+* ✅ Los productos agregados aparecen en el carrito de compras
+* ✅ Nombre, precio y cantidad del producto son correctos
 
 ### Checkout (`checkout.feature`)
-- ✅ Complete checkout flow from cart to order confirmation
-- ✅ Confirmation message is displayed on success
+
+* ✅ Completar el flujo de compra desde el carrito hasta la confirmación
+* ✅ Se muestra el mensaje de confirmación al finalizar
 
 ---
 
-## Design Pattern
+## Patrón de Diseño
 
-This project uses the **Page Object Model (POM)**. Each page of the application has a dedicated class in `page-objects/` that encapsulates its locators and interactions. Step definitions call these page objects and contain no selectors themselves. `BasePage.js` holds shared logic (navigation, waits) that all page classes inherit.
+Este proyecto utiliza el **Page Object Model (POM)**. Cada página de la aplicación tiene una clase dedicada en `page-objects/` que encapsula sus selectores e interacciones. Las definiciones de pasos llaman a estos page objects y no contienen selectores directamente. `BasePage.js` contiene lógica compartida (navegación, esperas) que todas las páginas heredan.
 
-This separates test intent (Gherkin) from implementation (page objects), making tests easier to maintain when the UI changes.
+Esto separa la intención de las pruebas (Gherkin) de la implementación (page objects), facilitando el mantenimiento cuando cambia la UI.
 
 ---
 
-## Automation Strategy
+## Estrategia de Automatización
 
-### Approach
-Tests are written in **BDD style** using Gherkin so that acceptance criteria map directly to executable scenarios. Each criterion from the user story has a corresponding feature file.
+### Enfoque
 
-### Pattern: Page Object Model
-Locators and page interactions are centralized in page classes. If a selector changes, only the page object needs updating — not every step definition that uses it.
+Las pruebas están escritas en estilo **BDD** usando Gherkin, de modo que los criterios de aceptación se mapean directamente a escenarios ejecutables. Cada criterio de la historia de usuario tiene su archivo feature correspondiente.
 
-### User coverage
-All required user types and credential scenarios are covered:
-- `standard_user` + valid password — happy path (login, cart, checkout)
-- `standard_user` + wrong password — negative login scenario
-- `locked_out_user` — verifies the locked account error state
+### Patrón: Page Object Model
 
-### Trade-offs considered
-- Cucumber adds overhead vs. plain Playwright tests, but was chosen to satisfy the BDD requirement and keep scenarios readable as acceptance criteria.
-- Feature files are split by page/flow rather than by user type to keep each file focused and independently runnable via the `test:*` scripts.
+Los selectores y las interacciones están centralizados en clases de página. Si un selector cambia, solo se actualiza el page object, no todas las definiciones de pasos.
+
+### Cobertura de usuarios
+
+Se cubren todos los tipos de usuario y escenarios de credenciales requeridos:
+
+* `standard_user` + contraseña válida — flujo feliz (login, carrito, checkout)
+* `standard_user` + contraseña incorrecta — escenario negativo de login
+* `locked_out_user` — valida el estado de error por cuenta bloqueada
+
+### Consideraciones (Trade-offs)
+
+* Cucumber añade algo de sobrecarga frente a pruebas puras con Playwright, pero se eligió para cumplir con el enfoque BDD y mantener los escenarios legibles como criterios de aceptación.
+* Los archivos feature están organizados por página/flujo en lugar de por tipo de usuario, para mantener cada archivo enfocado y ejecutable de forma independiente mediante los scripts `test:*`.
